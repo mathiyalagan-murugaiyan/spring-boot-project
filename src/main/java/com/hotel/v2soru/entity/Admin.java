@@ -26,7 +26,7 @@ public class Admin {
     @OneToMany(cascade = CascadeType.ALL)
 	private List<User> managedUsers; // One-to-Many ->one admin many user
     @OneToMany(cascade = CascadeType.ALL)
-	private List<Order> managedOrders; // One-to-Many ->one admin many orders
-    @OneToMany
+	private List<FoodOrder> managedOrders; // One-to-Many ->one admin many orders
+    @OneToMany(cascade = CascadeType.ALL)
 	private List<DeliveryBoy> managedDeliveryBoys;
 }

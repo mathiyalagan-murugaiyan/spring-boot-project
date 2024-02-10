@@ -2,7 +2,7 @@ package com.hotel.v2soru.dto;
 
 import java.util.List;
 
-import com.hotel.v2soru.entity.Order;
+import com.hotel.v2soru.entity.FoodOrder;
 
 import lombok.Getter;
 import lombok.Setter;
@@ -17,6 +17,6 @@ public class UserDto {
 
 	private String userEmail;
 
-	private List<Order> orders;
+	private List<FoodOrder> foodOrders;
 
 }

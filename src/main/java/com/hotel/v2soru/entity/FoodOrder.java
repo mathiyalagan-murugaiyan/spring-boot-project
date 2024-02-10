@@ -12,11 +12,11 @@ import lombok.Data;
 
 @Data
 @Entity
-public class Order {
+public class FoodOrder {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	private int orderId;
+	private long foodOrderId;
 	@OneToMany(cascade = CascadeType.ALL)
 	private List<FoodItem> items; // one-to-Many with FoodItem
 	private String status;

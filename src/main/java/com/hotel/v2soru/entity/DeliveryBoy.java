@@ -16,11 +16,11 @@ public class DeliveryBoy {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	private int deliveryBoyId;
+	private long deliveryBoyId;
 	private String deliveryBoyname;
 	private String phoneNumber;
 	
 	@OneToMany(cascade = CascadeType.ALL)
-	private List<Order> orders;
+	private List<FoodOrder> foodOrders;
 
 }

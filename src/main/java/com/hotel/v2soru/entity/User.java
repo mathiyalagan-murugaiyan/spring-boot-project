@@ -23,7 +23,8 @@ public class User {
 	private String userEmail;
 	
 	private String userPassword;
+	
 	@OneToMany(cascade = CascadeType.ALL)
-	private List<Order> orders;
+	private List<FoodOrder> foodOrders;
 
 }
