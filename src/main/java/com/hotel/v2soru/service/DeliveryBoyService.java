@@ -36,7 +36,6 @@ public class DeliveryBoyService {
 			
 			return new ResponseEntity<ResponseStructure<DeliveryBoyDto>>(structure,HttpStatus.FOUND);
 		}
-		
 		throw new DeliveryBoyNotFound("DeliveryBoy does not exist");
 	}
 	
@@ -77,7 +76,6 @@ public class DeliveryBoyService {
 			  
 			  return new ResponseEntity<ResponseStructure<DeliveryBoy>>(structure,HttpStatus.OK);
 		  }
-		
 		  throw new DeliveryBoyNotFound("DeliveryBoy does not exist");
 	}
 	
@@ -91,7 +89,6 @@ public class DeliveryBoyService {
 			  
 			  return new ResponseEntity<ResponseStructure<DeliveryBoy>>(structure,HttpStatus.OK);
 		  }
-		
 		  throw new DeliveryBoyNotFound("DeliveryBoy does not exist");
 	}
 
