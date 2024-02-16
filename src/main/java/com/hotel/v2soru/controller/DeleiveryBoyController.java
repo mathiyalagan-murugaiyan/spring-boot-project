@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.hotel.v2soru.configure.ResponseStructure;
+import com.hotel.v2soru.dto.DeliveryBoyDto;
 import com.hotel.v2soru.entity.DeliveryBoy;
 import com.hotel.v2soru.service.DeliveryBoyService;
 
@@ -25,13 +26,13 @@ public class DeleiveryBoyController {
 	private DeliveryBoyService deliveryBoyService;
 
 	@GetMapping("find")
-	public ResponseEntity<ResponseStructure<DeliveryBoy>> findDeliveryBoy(@RequestParam long deliveryBoyId){
+	public ResponseEntity<ResponseStructure<DeliveryBoyDto>> findDeliveryBoy(@RequestParam long deliveryBoyId){
 		
 		return deliveryBoyService.findDeliveryBoy(deliveryBoyId);
 	}
 	
 	@GetMapping("findAll")
-	public ResponseEntity<ResponseStructure<List<DeliveryBoy>>> findAllDeliveryBoy(){
+	public ResponseEntity<ResponseStructure<List<DeliveryBoyDto>>> findAllDeliveryBoy(){
 		
 		return deliveryBoyService.findAllDeliveyBoy();
 	}
@@ -53,4 +54,5 @@ public class DeleiveryBoyController {
 		
 		return deliveryBoyService.deleteDeliveryBoy(deliveryBoyId);
 	}
+	
 }

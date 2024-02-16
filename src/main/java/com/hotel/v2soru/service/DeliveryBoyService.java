@@ -1,7 +1,9 @@
 package com.hotel.v2soru.service;
 
+import java.util.ArrayList;
 import java.util.List;
 
+import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -9,7 +11,10 @@ import org.springframework.stereotype.Service;
 
 import com.hotel.v2soru.configure.ResponseStructure;
 import com.hotel.v2soru.dao.DeliveryBoyDao;
+import com.hotel.v2soru.dto.DeliveryBoyDto;
 import com.hotel.v2soru.entity.DeliveryBoy;
+import com.hotel.v2soru.exception.DeliveryBoyListNotFound;
+import com.hotel.v2soru.exception.DeliveryBoyNotFound;
 
 @Service
 public class DeliveryBoyService {
@@ -17,31 +22,40 @@ public class DeliveryBoyService {
 	@Autowired
 	private DeliveryBoyDao deliveryBoyDao;
 	
-	public ResponseEntity<ResponseStructure<DeliveryBoy>> findDeliveryBoy(long deliveryBoyId){
+	
+	public ResponseEntity<ResponseStructure<DeliveryBoyDto>> findDeliveryBoy(long deliveryBoyId){
 		DeliveryBoy deliveryBoy = deliveryBoyDao.findDeliveryBoy(deliveryBoyId);
 		if(deliveryBoy != null) {
-			ResponseStructure<DeliveryBoy> structure = new ResponseStructure<DeliveryBoy>();
+			
+			ModelMapper mapper = new ModelMapper();
+			DeliveryBoyDto deliveryBoyDto = mapper.map(deliveryBoy, DeliveryBoyDto.class);
+			ResponseStructure<DeliveryBoyDto> structure = new ResponseStructure<>();
 			structure.setMessage("DeliveryBoy found");
 			structure.setStatusCode(HttpStatus.FOUND.value());
-			structure.setData(deliveryBoyDao.findDeliveryBoy(deliveryBoyId));
+			structure.setData(deliveryBoyDto);
 			
-			return new ResponseEntity<ResponseStructure<DeliveryBoy>>(structure,HttpStatus.FOUND);
+			return new ResponseEntity<ResponseStructure<DeliveryBoyDto>>(structure,HttpStatus.FOUND);
 		}
 		
-		return null; //throw deliveryBoy does not Exist
+		throw new DeliveryBoyNotFound("DeliveryBoy does not exist");
 	}
 	
-	public ResponseEntity<ResponseStructure<List<DeliveryBoy>>> findAllDeliveyBoy(){
+	public ResponseEntity<ResponseStructure<List<DeliveryBoyDto>>> findAllDeliveyBoy(){
 		List<DeliveryBoy> allDeliveryBoy = deliveryBoyDao.findAllDeliveryBoy();
 		if(!allDeliveryBoy.isEmpty()) {
-			ResponseStructure<List<DeliveryBoy>> structure = new ResponseStructure<List<DeliveryBoy>>();
+			List<DeliveryBoyDto> deliveryBoyDto = new ArrayList<DeliveryBoyDto>();
+			ModelMapper mapper = new ModelMapper();
+			for (DeliveryBoy deliveryBoyListlist : allDeliveryBoy) {
+				deliveryBoyDto.add(mapper.map(deliveryBoyListlist, DeliveryBoyDto.class));
+			}
+			ResponseStructure<List<DeliveryBoyDto>> structure = new ResponseStructure<List<DeliveryBoyDto>>();
 			structure.setMessage("DeliverBoy List Found");
 			structure.setStatusCode(HttpStatus.FOUND.value());
-			structure.setData(deliveryBoyDao.findAllDeliveryBoy());
+			structure.setData(deliveryBoyDto);
 			
-			return new ResponseEntity<ResponseStructure<List<DeliveryBoy>>>(structure,HttpStatus.FOUND);
+			return new ResponseEntity<ResponseStructure<List<DeliveryBoyDto>>>(structure,HttpStatus.FOUND);
 		}
-		return null; //throw deliverboy list not found
+		throw new DeliveryBoyListNotFound("DeliveryBoy List does not exist");
 	}
 	
 	public ResponseEntity<ResponseStructure<DeliveryBoy>> saveDeliveryBoy(DeliveryBoy deliveryBoy){
@@ -64,7 +78,7 @@ public class DeliveryBoyService {
 			  return new ResponseEntity<ResponseStructure<DeliveryBoy>>(structure,HttpStatus.OK);
 		  }
 		
-		return  null; //throw deliveryboy does not exist
+		  throw new DeliveryBoyNotFound("DeliveryBoy does not exist");
 	}
 	
 	public ResponseEntity<ResponseStructure<DeliveryBoy>> deleteDeliveryBoy(long deliveryBoyId){
@@ -78,7 +92,7 @@ public class DeliveryBoyService {
 			  return new ResponseEntity<ResponseStructure<DeliveryBoy>>(structure,HttpStatus.OK);
 		  }
 		
-		return null; //throw deliveryboy does not exist
+		  throw new DeliveryBoyNotFound("DeliveryBoy does not exist");
 	}
 
 }

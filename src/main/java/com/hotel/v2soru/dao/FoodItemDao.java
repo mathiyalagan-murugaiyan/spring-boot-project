@@ -39,11 +39,11 @@ public class FoodItemDao {
 	public FoodItem updateFoodItem(long foodId , FoodItem foodItem) {
 		
 		FoodItem exfoodItem = findFoodItem(foodId);
-		if(exfoodItem.getItemId() == foodId) {
+		if(exfoodItem !=null) {
 		ModelMapper mapper = new ModelMapper();
 		mapper.map(foodItem , exfoodItem);
-		foodItemRepo.save(exfoodItem);
-		return exfoodItem;
+		
+		return foodItemRepo.save(exfoodItem);
 		}
 		return null;
 	}
@@ -51,11 +51,11 @@ public class FoodItemDao {
 	public FoodItem deleteFoodItem(long foodId) {
 		FoodItem fooditem = findFoodItem(foodId);
 		
-		if(fooditem.getItemId() == foodId) {
+		if(fooditem != null) {
 			foodItemRepo.deleteById(foodId);
 			return fooditem;
 		}
 		return null;
 	}
-
+	
 }

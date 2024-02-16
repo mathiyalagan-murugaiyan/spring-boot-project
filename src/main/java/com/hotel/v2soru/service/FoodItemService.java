@@ -10,6 +10,8 @@ import org.springframework.stereotype.Service;
 import com.hotel.v2soru.configure.ResponseStructure;
 import com.hotel.v2soru.dao.FoodItemDao;
 import com.hotel.v2soru.entity.FoodItem;
+import com.hotel.v2soru.exception.FoodItemListNotFound;
+import com.hotel.v2soru.exception.FoodItemNotFound;
 
 @Service
 public class FoodItemService {
@@ -29,7 +31,7 @@ public class FoodItemService {
 			return new ResponseEntity<ResponseStructure<FoodItem>>(structure,HttpStatus.FOUND);
 		}
 		
-		return null; //throw food item does not exist
+		throw new FoodItemNotFound("FoodItem does not exist");
 	}
 	
 	public ResponseEntity<ResponseStructure<List<FoodItem>>> findAllFoodItem(){
@@ -45,7 +47,7 @@ public class FoodItemService {
 			return new ResponseEntity<ResponseStructure<List<FoodItem>>>(structure,HttpStatus.FOUND);
 		}
 		
-		return null; // throw fooditem list not found
+		throw new FoodItemListNotFound("FoodItem List does not exist");
 	}
 	
 	public ResponseEntity<ResponseStructure<FoodItem>> saveFoodItem(FoodItem foodItem){
@@ -67,10 +69,9 @@ public class FoodItemService {
 			 structure.setData(foodItemDao.updateFoodItem(foodItemId, foodItem));
 			 
 			 return new ResponseEntity<ResponseStructure<FoodItem>>(structure,HttpStatus.OK);
-			 
 		 }
 		
-		return null; //throw food item does not exist
+		throw new FoodItemNotFound("FoodItem does not exist");
 	}
 	
 	public ResponseEntity<ResponseStructure<FoodItem>> deleteFoodItem(long foodItemId){
@@ -83,7 +84,7 @@ public class FoodItemService {
 			
 			return new ResponseEntity<ResponseStructure<FoodItem>>(structure,HttpStatus.OK);
 		}
-		return null; // throw fooditem does not exist
+		throw new FoodItemNotFound("FoodItem does not exist");
 	}
 
 }

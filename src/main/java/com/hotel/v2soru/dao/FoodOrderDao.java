@@ -37,20 +37,23 @@ public class FoodOrderDao {
 	}
 	
 	public FoodOrder updateFoodOrder(long foodOrderId, FoodOrder foodOrder) {
-		FoodOrder exFoodOrder = findFoodOrder(foodOrderId);
-		if(exFoodOrder.getFoodOrderId() == foodOrderId) {
-		ModelMapper mapper = new ModelMapper();
-		mapper.map(foodOrder , exFoodOrder);
-		
-		return exFoodOrder;
-		}
-		return null;
+	    FoodOrder exFoodOrder = findFoodOrder(foodOrderId);
+
+	    if (exFoodOrder != null) {
+	        ModelMapper mapper = new ModelMapper();
+	        mapper.map(foodOrder, exFoodOrder);
+
+	        return foodOrderRepo.save(exFoodOrder);
+	    }
+
+	    return null;
 	}
+
 	
 	public FoodOrder deleteFoodOrder(long foodOrderId) {
 		
 		FoodOrder foodOrder = findFoodOrder(foodOrderId);
-		if(foodOrder.getFoodOrderId() == foodOrderId) {
+		if(foodOrder != null) {
 			foodOrderRepo.deleteById(foodOrderId);
 			return foodOrder;
 		}

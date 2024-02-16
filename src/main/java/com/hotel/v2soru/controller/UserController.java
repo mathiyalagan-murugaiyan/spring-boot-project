@@ -4,6 +4,7 @@ import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -17,6 +18,8 @@ import com.hotel.v2soru.configure.ResponseStructure;
 import com.hotel.v2soru.dto.UserDto;
 import com.hotel.v2soru.entity.User;
 import com.hotel.v2soru.service.UserService;
+
+import jakarta.validation.Valid;
 
 @RestController
 @RequestMapping("user")
@@ -38,7 +41,7 @@ public class UserController {
 	}
 	
 	@PostMapping("save")
-	public ResponseEntity<ResponseStructure<UserDto>> saveUser(@RequestBody User user){
+	public ResponseEntity<ResponseStructure<UserDto>> saveUser(@Valid @RequestBody User user, BindingResult result){
 		
 		return userService.saveUser(user);
 	}
@@ -55,5 +58,15 @@ public class UserController {
 		return userService.deleteUser(userId);
 	}
 	
+	@PutMapping("assignOrder")
+	public ResponseEntity<ResponseStructure<User>> assignOrder(@RequestParam long userId,@RequestParam long foodOrderId){
+		
+		return userService.assignOreder(userId, foodOrderId);
+	}
 	
+	@PostMapping("userLogin")
+	public ResponseEntity<ResponseStructure<User>> userLogin(@RequestBody User user){
+		return userService.userLogin(user);
+	}
+
 }

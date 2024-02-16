@@ -48,7 +48,6 @@ public class FoodItemController {
 		return foodItemService.updateFoodItem(foodItemId, foodItem);
 	}
 	
-	
 	@DeleteMapping("delete")
 	public ResponseEntity<ResponseStructure<FoodItem>> dleteFoodItem(@RequestParam long foodItemId){
 		

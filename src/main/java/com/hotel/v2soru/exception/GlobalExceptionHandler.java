@@ -1,5 +1,8 @@
 package com.hotel.v2soru.exception;
 
+import java.util.HashMap;
+import java.util.Map;
+
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.ExceptionHandler;
@@ -8,9 +11,31 @@ import org.springframework.web.servlet.mvc.method.annotation.ResponseEntityExcep
 
 import com.hotel.v2soru.configure.ResponseStructure;
 
+import jakarta.validation.ConstraintViolation;
+import jakarta.validation.ConstraintViolationException;
+
 
 @RestControllerAdvice
 public class GlobalExceptionHandler extends ResponseEntityExceptionHandler {
+	
+	
+	// validation Exception
+	
+	@ExceptionHandler
+	public ResponseEntity<Object> handleConstraintViolation(ConstraintViolationException ex){
+		ResponseStructure<Object> structure = new ResponseStructure<Object>();
+		Map<String,String> hashmap = new HashMap<String, String>();
+		
+		for(ConstraintViolation<?> violation : ex.getConstraintViolations()) {
+			String field = violation.getPropertyPath().toString();
+			String message = violation.getMessage();
+			hashmap.put(field, message);
+		}
+		structure.setMessage("add proper details");
+		structure.setStatusCode(HttpStatus.FORBIDDEN.value());
+		structure.setData(hashmap);
+		return new ResponseEntity<Object>(structure,HttpStatus.BAD_REQUEST);
+	}
 	
 	//User Exception
 	
@@ -61,7 +86,6 @@ public class GlobalExceptionHandler extends ResponseEntityExceptionHandler {
 		return new ResponseEntity<ResponseStructure<String>>(structure,HttpStatus.NOT_FOUND);
 	}
 	
-	
 	//FoodOrder Exception
 	
 	@ExceptionHandler
@@ -71,7 +95,6 @@ public class GlobalExceptionHandler extends ResponseEntityExceptionHandler {
 		structure.setData(ex.getMessage());
 		structure.setMessage("FoodOrder Not Found");
 		structure.setStatusCode(HttpStatus.NOT_FOUND.value());
-		
 		return new ResponseEntity<ResponseStructure<String>>(structure,HttpStatus.NOT_FOUND);
 	}
 	
@@ -129,8 +152,7 @@ public class GlobalExceptionHandler extends ResponseEntityExceptionHandler {
 		structure.setMessage("DeliveryBoy List Not Found");
 		structure.setStatusCode(HttpStatus.NOT_FOUND.value());
 		return new ResponseEntity<ResponseStructure<String>>(structure,HttpStatus.NOT_FOUND);
-		
-		
+	
 	}
 }
 

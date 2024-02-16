@@ -50,7 +50,7 @@ public class DeliveryBoyDao {
 	public DeliveryBoy deleteDeliveryBoy(long deliveryBoyId){
 		
 		DeliveryBoy deliveryboy = findDeliveryBoy(deliveryBoyId);
-		if(deliveryboy == null) {
+		if(deliveryboy.getDeliveryBoyId() == deliveryBoyId) {
 			deliveryBoyRepo.deleteById(deliveryBoyId);
 			return deliveryboy;
 		}

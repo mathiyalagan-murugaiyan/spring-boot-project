@@ -13,10 +13,8 @@ import com.hotel.v2soru.repository.UserRepo;
 @Repository
 public class UserDao {
 	
-	
 	@Autowired
 	private UserRepo userRepo;
-	
 	
 	public User findUser(long userId) {
 		
@@ -59,4 +57,8 @@ public class UserDao {
 		
 	}
 
+	public User userLogin(String userEmail) {
+		
+		return userRepo.findoneByuserEmail(userEmail);
+	}
 }

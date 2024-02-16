@@ -55,4 +55,10 @@ public class AdminDao {
 		return null;
 	}
 	
+	public Admin findByadminEmail(String adminEmail) {
+		
+		return adminRepo.findoneByadminEmail(adminEmail);
+	}
+	
+
 }
