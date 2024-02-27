@@ -13,7 +13,8 @@ public class FoodItem {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private long itemId;
-	private String name;
-	private double cost;
+	private String foodItemName;
+	private double costPerItem;
+	private long itemQuentity;
 
 }

@@ -121,7 +121,7 @@ public class FoodOrderService {
  private long calculateTotalCost(List<FoodItem> items) {
 	    long totalCost = 0;
 	    for (FoodItem item : items) {
-	        totalCost += item.getCost();
+	        totalCost += (item.getCostPerItem()* item.getItemQuentity());
 	    }
 	    return totalCost;
 	}
@@ -154,7 +154,7 @@ public class FoodOrderService {
  private long reduceTotalCost(List<FoodItem> items) {
 	    long totalCost = 0;
 	    for (FoodItem item : items) {
-	        totalCost += item.getCost();
+	        totalCost += item.getCostPerItem();
 	    }
 	    return totalCost;
 	}
